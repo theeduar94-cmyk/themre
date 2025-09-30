@@ -1,0 +1,646 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Exo 2', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.cr7-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('multimedia/cr7.jpg') center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    filter: brightness(0.7) contrast(1.2);
+    animation: backgroundPulse 8s ease-in-out infinite;
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%),
+        linear-gradient(45deg, rgba(220,20,60,0.3) 0%, rgba(139,0,0,0.4) 50%, rgba(0,0,0,0.6) 100%);
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(10px, 3vw, 30px);
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.central-message {
+    position: relative;
+    z-index: 50;
+}
+
+.message-container {
+    position: relative;
+    max-width: 90vw;
+    margin: 0 auto;
+}
+
+.cr7-number {
+    position: absolute;
+    top: clamp(-60px, -15vw, -120px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Racing Sans One', cursive;
+    font-size: clamp(6rem, 20vw, 15rem);
+    color: rgba(255, 215, 0, 0.2);
+    font-weight: 900;
+    text-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+    animation: numberFloat 4s ease-in-out infinite;
+    z-index: -1;
+}
+
+.animated-text {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.5rem, 6vw, 3.5rem);
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 
+        0 0 20px rgba(255, 215, 0, 0.8),
+        0 0 40px rgba(220, 20, 60, 0.6),
+        3px 3px 0px #000;
+    margin-bottom: clamp(15px, 3vw, 30px);
+    letter-spacing: clamp(1px, 0.5vw, 3px);
+    line-height: 1.2;
+}
+
+.animated-text .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(50px) rotateX(90deg);
+    animation: wordReveal 1.2s forwards;
+    margin: 0 clamp(5px, 2vw, 15px);
+}
+
+.animated-text .word:nth-child(1) { animation-delay: 0.2s; }
+.animated-text .word:nth-child(2) { animation-delay: 0.6s; }
+.animated-text .word:nth-child(3) { animation-delay: 1.0s; color: #ffd700; }
+.animated-text .word:nth-child(4) { animation-delay: 1.4s; }
+
+.subtitle-message {
+    font-family: 'Racing Sans One', cursive;
+    font-size: clamp(1.2rem, 4vw, 2.2rem);
+    color: #dc143c;
+    text-shadow: 
+        0 0 15px rgba(220, 20, 60, 0.8),
+        2px 2px 0px #000;
+    letter-spacing: clamp(1px, 0.3vw, 2px);
+    line-height: 1.3;
+}
+
+.subtitle-message .word-sub {
+    display: inline-block;
+    opacity: 0;
+    transform: scale(0) rotate(180deg);
+    animation: subWordReveal 1s forwards;
+    margin: 0 clamp(5px, 1.5vw, 10px);
+}
+
+.subtitle-message .word-sub:nth-child(1) { animation-delay: 2s; }
+.subtitle-message .word-sub:nth-child(2) { animation-delay: 2.3s; }
+.subtitle-message .word-sub:nth-child(3) { animation-delay: 2.6s; }
+.subtitle-message .word-sub:nth-child(4) { animation-delay: 2.9s; }
+
+.hot-wheels-section {
+    position: absolute;
+    bottom: clamp(20px, 5vh, 60px);
+    left: 0;
+    width: 100%;
+    height: clamp(80px, 15vh, 160px);
+    z-index: 10;
+}
+
+.racing-track {
+    position: relative;
+    width: 100%;
+    height: clamp(120px, 12vh, 100px);
+    background: 
+        linear-gradient(to right, 
+            rgba(0,0,0,0.8) 0%, 
+            rgba(50,50,50,0.9) 50%, 
+            rgba(0,0,0,0.8) 100%);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 
+        inset 0 5px 15px rgba(0,0,0,0.5),
+        0 0 20px rgba(255,215,0,0.3);
+}
+
+.track-line {
+    position: absolute;
+    width: 100%;
+    height: clamp(2px, 0.5vh, 4px);
+    background: repeating-linear-gradient(
+        to right,
+        #ffd700 0px,
+        #ffd700 20px,
+        transparent 20px,
+        transparent 40px
+    );
+    animation: trackMove 2s linear infinite;
+}
+
+.track-line.top { top: 20%; }
+.track-line.bottom { bottom: 20%; }
+
+.hot-wheels-car {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    z-index: 15;
+    filter: 
+        drop-shadow(0 0 15px rgba(255,215,0,0.8))
+        drop-shadow(0 0 25px rgba(220,20,60,0.6));
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.car-red {
+    background-image: url('multimedia/1.png');
+    width: clamp(60px, 12vw, 180px);
+    height: clamp(40px, 8vw, 120px);
+    animation: carRace1 10.5s linear infinite;
+    animation-delay: 3s;
+    filter: 
+        drop-shadow(0 0 15px rgba(255,0,0,0.8))
+        drop-shadow(0 0 25px rgba(255,215,0,0.6))
+        hue-rotate(0deg);
+}
+
+.car-blue {
+    background-image: url('multimedia/2.png');
+    width: clamp(70px, 14vw, 200px);
+    height: clamp(50px, 10vw, 150px);
+    animation: carRace2 10.8s linear infinite;
+    animation-delay: 4s;
+    filter: 
+        drop-shadow(0 0 15px rgba(0,100,255,0.8))
+        drop-shadow(0 0 25px rgba(255,215,0,0.6))
+        hue-rotate(180deg);
+}
+
+.car-yellow {
+    background-image: url('multimedia/3.png');
+    width: clamp(55px, 11vw, 170px);
+    height: clamp(35px, 7vw, 110px);
+    animation: carRace3 11.1s linear infinite;
+    animation-delay: 5s;
+    filter: 
+        drop-shadow(0 0 15px rgba(255,255,0,0.8))
+        drop-shadow(0 0 25px rgba(255,215,0,0.6))
+        hue-rotate(60deg);
+}
+
+.car-green {
+    background-image: url('multimedia/4.png');
+    width: clamp(60px, 12vw, 180px);
+    height: clamp(40px, 8vw, 120px);
+    animation: carRace1 11.4s linear infinite;
+    animation-delay: 6s;
+    filter: 
+        drop-shadow(0 0 15px rgba(0,255,0,0.8))
+        drop-shadow(0 0 25px rgba(255,215,0,0.6))
+        hue-rotate(120deg);
+}
+
+.car-orange {
+    background-image: url('multimedia/5.png');
+    width: clamp(75px, 15vw, 230px);
+    height: clamp(50px, 10vw, 150px);
+    animation: carRace2 11.8s linear infinite;
+    animation-delay: 7s;
+    filter: 
+        drop-shadow(0 0 15px rgba(255,165,0,0.8))
+        drop-shadow(0 0 25px rgba(255,215,0,0.6))
+        hue-rotate(30deg);
+}
+
+.hot-wheels-car:hover {
+    filter: 
+        drop-shadow(0 0 20px rgba(255,215,0,1))
+        drop-shadow(0 0 35px rgba(220,20,60,0.9))
+        brightness(1.2);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.speed-effects {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.speed-line {
+    position: absolute;
+    top: 50%;
+    width: clamp(50px, 15vw, 120px);
+    height: clamp(1px, 0.3vh, 3px);
+    background: linear-gradient(to right, transparent, rgba(255,215,0,0.8), transparent);
+    animation: speedLine 1s linear infinite;
+}
+
+.speed-line:nth-child(1) { 
+    animation-delay: 0s; 
+    top: 30%;
+}
+.speed-line:nth-child(2) { 
+    animation-delay: 0.25s; 
+    top: 45%;
+}
+.speed-line:nth-child(3) { 
+    animation-delay: 0.5s; 
+    top: 60%;
+}
+.speed-line:nth-child(4) { 
+    animation-delay: 0.75s; 
+    top: 75%;
+}
+
+.floating-elements {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.floating-heart {
+    position: absolute;
+    width: clamp(15px, 3vw, 25px);
+    height: clamp(15px, 3vw, 25px);
+    background: #dc143c;
+    transform: rotate(45deg);
+    animation: floatUp 4s linear infinite;
+}
+
+.floating-heart::before,
+.floating-heart::after {
+    content: '';
+    position: absolute;
+    width: clamp(15px, 3vw, 25px);
+    height: clamp(15px, 3vw, 25px);
+    background: #dc143c;
+    border-radius: 50%;
+}
+
+.floating-heart::before {
+    top: -50%;
+    left: 0;
+}
+
+.floating-heart::after {
+    top: 0;
+    left: -50%;
+}
+
+.floating-heart:nth-child(1) { 
+    left: 20%; 
+    animation-delay: 0s;
+    animation-duration: 6s;
+}
+.floating-heart:nth-child(2) { 
+    left: 80%; 
+    animation-delay: 2s;
+    animation-duration: 5s;
+}
+.floating-heart:nth-child(3) { 
+    left: 50%; 
+    animation-delay: 4s;
+    animation-duration: 7s;
+}
+
+.floating-star {
+    position: absolute;
+    font-size: clamp(1rem, 3vw, 2.5rem);
+    color: #ffd700;
+    animation: starTwinkle 2s ease-in-out infinite, floatUp 8s linear infinite;
+}
+
+.floating-star:nth-child(4) {
+    left: 15%;
+    top: 70%;
+    animation-delay: 1s;
+}
+
+.floating-star:nth-child(5) {
+    left: 85%;
+    top: 60%;
+    animation-delay: 3s;
+}
+
+@keyframes backgroundPulse {
+    0%, 100% { 
+        filter: brightness(0.7) contrast(1.2) saturate(1);
+    }
+    50% { 
+        filter: brightness(0.9) contrast(1.4) saturate(1.3);
+    }
+}
+
+@keyframes numberFloat {
+    0%, 100% { 
+        transform: translateX(-50%) translateY(0px) rotate(0deg);
+    }
+    50% { 
+        transform: translateX(-50%) translateY(-20px) rotate(5deg);
+    }
+}
+
+@keyframes wordReveal {
+    0% { 
+        opacity: 0; 
+        transform: translateY(50px) rotateX(90deg) scale(0.5);
+    }
+    70% { 
+        transform: translateY(-10px) rotateX(0deg) scale(1.1);
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0px) rotateX(0deg) scale(1);
+    }
+}
+
+@keyframes subWordReveal {
+    0% { 
+        opacity: 0; 
+        transform: scale(0) rotate(180deg);
+    }
+    60% { 
+        transform: scale(1.2) rotate(10deg);
+    }
+    100% { 
+        opacity: 1; 
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+@keyframes carRace1 {
+    0% { 
+        left: -15vw; 
+        transform: translateY(-50%) scale(1) rotateY(0deg);
+    }
+    20% { 
+        transform: translateY(-50%) scale(1.1) rotateY(-2deg);
+    }
+    80% { 
+        transform: translateY(-50%) scale(1.1) rotateY(2deg);
+    }
+    100% { 
+        left: calc(100% + 15vw); 
+        transform: translateY(-50%) scale(1) rotateY(0deg);
+    }
+}
+
+@keyframes carRace2 {
+    0% { 
+        left: -15vw; 
+        top: 40%; 
+        transform: translateY(-50%) scale(1) rotateZ(0deg);
+    }
+    25% { 
+        transform: translateY(-50%) scale(1.05) rotateZ(1deg);
+    }
+    50% { 
+        top: 50%;
+        transform: translateY(-50%) scale(1.1) rotateZ(0deg);
+    }
+    75% { 
+        transform: translateY(-50%) scale(1.05) rotateZ(-1deg);
+    }
+    100% { 
+        left: calc(100% + 15vw); 
+        top: 60%; 
+        transform: translateY(-50%) scale(1) rotateZ(0deg);
+    }
+}
+
+@keyframes carRace3 {
+    0% { 
+        left: -15vw; 
+        top: 60%; 
+        transform: translateY(-50%) scale(0.9) rotateY(0deg);
+    }
+    30% { 
+        transform: translateY(-50%) scale(1.2) rotateY(3deg);
+    }
+    50% { 
+        top: 45%;
+    }
+    70% { 
+        transform: translateY(-50%) scale(1.2) rotateY(-3deg);
+    }
+    100% { 
+        left: calc(100% + 15vw); 
+        top: 40%; 
+        transform: translateY(-50%) scale(0.9) rotateY(0deg);
+    }
+}
+
+@keyframes trackMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(40px); }
+}
+
+@keyframes speedLine {
+    0% { 
+        left: -15vw; 
+        opacity: 0;
+        transform: scaleX(0.5);
+    }
+    20% { 
+        opacity: 1;
+        transform: scaleX(1);
+    }
+    80% { 
+        opacity: 1;
+        transform: scaleX(1.2);
+    }
+    100% { 
+        left: 115%;
+        opacity: 0;
+        transform: scaleX(0.5);
+    }
+}
+
+@keyframes floatUp {
+    0% { 
+        bottom: -10vh; 
+        opacity: 0;
+        transform: rotate(45deg) scale(0.5);
+    }
+    10% { 
+        opacity: 1;
+    }
+    90% { 
+        opacity: 1;
+    }
+    100% { 
+        bottom: 110vh; 
+        opacity: 0;
+        transform: rotate(45deg) scale(1.5);
+    }
+}
+
+@keyframes starTwinkle {
+    0%, 100% { 
+        transform: scale(1) rotate(0deg);
+        opacity: 0.7;
+    }
+    50% { 
+        transform: scale(1.3) rotate(180deg);
+        opacity: 1;
+    }
+}
+
+@keyframes specialDayGlow {
+    0%, 100% {
+        box-shadow: inset 0 0 50px rgba(255, 215, 0, 0.1);
+    }
+    50% {
+        box-shadow: inset 0 0 100px rgba(255, 215, 0, 0.3);
+    }
+}
+
+@keyframes trailFade {
+    0% {
+        opacity: 1;
+        transform: translateY(-50%) scaleX(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50%) scaleX(0);
+    }
+}
+
+@keyframes fireworkExplode {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(5);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(10);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .cr7-background {
+        background-attachment: scroll;
+    }
+    
+    .animated-text .word {
+        display: block;
+        margin: 5px 0;
+    }
+    
+    .subtitle-message .word-sub {
+        display: block;
+        margin: 3px 0;
+    }
+    
+    .hot-wheels-section {
+        bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cr7-background {
+        background-attachment: scroll;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+    
+    .animated-text {
+        text-align: center;
+    }
+    
+    .subtitle-message {
+        text-align: center;
+    }
+}
+
+@media (orientation: portrait) and (max-width: 768px) {
+    .cr7-number {
+        top: -8vh;
+        font-size: 15vw;
+    }
+    
+    .message-container {
+        margin-top: 10vh;
+    }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+    .cr7-number {
+        top: -5vh;
+        font-size: 10vh;
+    }
+    
+    .hot-wheels-section {
+        bottom: 5px;
+        height: 20vh;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1920px) {
+    .message-container {
+        max-width: 1200px;
+    }
+}
